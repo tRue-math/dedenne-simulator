@@ -9,7 +9,7 @@ const int SIMULATION_WEEKS = 100000;
 const double SKILL_BOOST_PERCENT = 0.10;
 const double MAX_CRIT_CHANCE = 0.70;
 const int MEALS_PER_DAY = 3;
-const int ITER_BETWEEN_MEAL = 100;
+const int ITER_BETWEEN_MEAL = 20;
 
 struct DayConfig {
     double base_crit_chance;
@@ -60,8 +60,8 @@ std::pair<double,double> simulate_week(double triggers_per_day, double dedenne_c
 }
 
 double calculate_baseline() {
-    double weekday_ev = (0.10 * 2.0 + 0.90 * 1.0) * 3 * 6;
-    double sunday_ev  = (0.30 * 3.0 + 0.70 * 1.0) * 3 * 1;
+    double weekday_ev = (WEEKDAY_CONFIG.base_crit_chance * WEEKDAY_CONFIG.crit_multiplier + (1 - WEEKDAY_CONFIG.base_crit_chance) * 1.0) * MEALS_PER_DAY * 6;
+    double sunday_ev  = (SUNDAY_CONFIG.base_crit_chance * SUNDAY_CONFIG.crit_multiplier + (1 - SUNDAY_CONFIG.base_crit_chance) * 1.0) * MEALS_PER_DAY * 1;
     return weekday_ev + sunday_ev;
 }
 
