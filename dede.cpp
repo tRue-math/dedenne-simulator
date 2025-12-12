@@ -44,7 +44,7 @@ std::pair<double,double> simulate_week(double triggers_per_day, double dedenne_c
                 if (current_boost > dedenne_cap) current_boost = dedenne_cap;
             }
             
-            if (hungry && (current_boost >= dedenne_cap || iter % ITER_BETWEEN_MEAL == ITER_BETWEEN_MEAL - 1)) {
+            if (hungry && iter % ITER_BETWEEN_MEAL == ITER_BETWEEN_MEAL - 1) {
                 hungry = false;
                 double final_chance = config.base_crit_chance + current_boost;
                 if (dist_prob(gen) < final_chance) {
@@ -94,10 +94,6 @@ int main() {
             double net_gain_week = avg_multipler_total - baseline;
 
             double avg_rest_rate = total_rest_rate_sum / SIMULATION_WEEKS;
-            
-            double total_triggers_week = rate * 7.0;
-            
-            double value_per_trigger = net_gain_week / total_triggers_week;
 
             std::cout << std::setprecision(4) << net_gain_week << ", "
                     << std::setprecision(4) << avg_rest_rate << (j == 7 ? "" : ", ");
